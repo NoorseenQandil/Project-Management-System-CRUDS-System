@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>CRUDS - Project Management System</title>
+        <meta name="description" content="Project Management System">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Datatable -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css">
+        <!-- Web Fonts -->
+        <link rel="stylesheet" href="CSS/all.css">
+        <!-- Bootstrap CSS File -->
+        <link rel="stylesheet" href="CSS/bootstrap.min.css">
+        <!-- Import CSS File -->
+        <link rel="stylesheet" href="CSS/style.css">
+    </head>
+    <html>
+
+        <!------------------------ Start Container ----------------------->
+        <body>
+            <div class="container">
+                 <!---------------------- Title ------------------->
+            <div class="row m-1 block">
+                <h1 class="text-capitalize text-center">
+                    <i class="fa-brands fa-product-hunt"></i>
+                    <span class="text-uppercase"> cruds </span> 
+                    system
+                    <span id="countPro"></span>
+                </h1>
+            </div>
+
+            <!--------------- Category ------------------->
+            <div class="row m-1 block bg-light">
+                <div class="col-md-6 col-sm-12">
+                    <div>
+                        <label for="ddlcategory" id="lbcate">Category : *</label>
+                        <select id="ddlcategory" class="form-control">
+                            <option>Select Category...</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <label for="category" id="lbInpCtae">Category Name: *</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Enter Name Category" id="category">
+                    
+                    <div class="form-group-append">
+                        <button class="btn btn-primary" onclick="validateCategory()">
+                            <i class="fa-regular fa-floppy-disk"></i>
+                        </button>
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#modelId">
+                            <i class="fa-solid fa-file-arrow-down"></i>
+                        </button>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        <!------------------------ End Container ------------------------->
+
+        <!------------------------ Start Product ----------------------->
+        <div class="row bg-light m-1 block">
+            <div class="col-md-4 col-sm-12">
+                <label for="product" id="lbProduct">Product Name: *</label>
+                <input id="product" type="text" class="form-control" placeholder="Enter Product Name.." required>             
+            </div>
+            <div class="col-md-2 col-sm-12">
+                <label for="quantity" id="lbquantity">Quantity: *</label>
+                <input id="quantity" type="number" class="form-control" value="0" required onkeyup="getTotal()" onchange="getTotal()">             
+            </div>
+            <div class="col-md-2 col-sm-12">
+                <label for="price" id="lbprice">Price: *</label>
+                <input id="price" type="number" class="form-control" value="0" required onkeyup="getTotal()" onchange="getTotal()">             
+            </div>
+            <div class="col-md-2 col-sm-12">
+                <label for="descount" id="lbdescount">Descount: </label>
+                <input id="descount" type="number" class="form-control" value="0" onkeyup="getTotal()" onchange="getTotal()">             
+            </div>
+            <div class="col-md-2 col-sm-12">
+                <label for="total" id="lbtotal">Total: </label>
+                <input id="total" type="number" class="form-control text-center bg-danger-subtle" value="0" disabled>             
+            </div>
+            <div class="text-center col-md-12 m-1">
+                <button class="btn btn-dark w-25" onclick="Reset()">
+                    <i class="fa-solid fa-trash-can-arrow-up"></i>
+                </button>
+                <button class="btn btn-primary w-25" onclick="validateinputs()" id="BtnSave">
+                    <i class="fa-regular fa-circle-down"></i>
+                </button>
+            </div>
+        </div>
+        <!------------------------ End Product ------------------------->
+
+
+        <!------------------------ Start Table ----------------------->
+        <div class="row bg-primary-subtle m-1 block">
+            <div class="col-md-12">
+                <table class="table table-striped table-bordered table-hover table-responsive col-md-12 text-center" id="tablPro">
+                    <thead>
+                        <tr>
+                            <th class="col-1">Index</th>
+                            <th class="col-2">Category</th>
+                            <th class="col-2">Product</th>
+                            <th class="col-1">Quantity</th>
+                            <th class="col-2">Price</th>
+                            <th class="col-1">Discount</th>
+                            <th class="col-1">Total</th>
+                            <th class="col-2">Events</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+         <!------------------------ End Table ------------------------->
+        
+         <!------------------------------------- Modal ----------------------------------->
+        <div class="modal fade" data-toggle="modal" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Category <span id="countCategory"></span></h5>
+                        <button type="button" class="bg-dark rounded close-icon close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <table class="table table-striped table-border table-hover table-responsive bg-white w-100 text-center m-0">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Category</th>
+                                        <th class="col-2">Events</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody id="bodyCate">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-dark" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!----------------------------------- JS ------------------------------------>
+        <!-- Datatable -->
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+        <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+        <!-- Web Fonts -->
+        <script src="JS/all.js"></script>
+        <!-- Bootstrap JS File -->
+        <script src="JS/bootstrap.min.js"></script>
+        <!-- Import JS File -->
+        <script src="JS/main.js"></script>
+    
+</body>

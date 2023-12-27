@@ -28,8 +28,8 @@
 
 ### 6. Alert Message Before Delete
 * Show alert message before delete data.
-![alert](https://github.com/NoorseenQandil/Project-Management-System-CRUDS-System/assets/70522199/aa97065c-53db-4518-b2ee-e65352569604)
-  
+![calc](https://github.com/NoorseenQandil/Project-Management-System-CRUDS-System/assets/70522199/fb3d9cdd-390b-48dc-afc7-9ff723d27319)
+
 ### 7. Calculate Total
 * Calculate total depending on discount, price and quantity.
 
